@@ -1,0 +1,1016 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>República de Noveria - País Virtual</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --rojo: #e63946;
+            --verde: #2a9d8f;
+            --azul: #1d3557;
+            --dorado: #e9c46a;
+            --blanco: #f1faee;
+            --gris: #8d99ae;
+            --gris-oscuro: #2b2d42;
+            --sombra: 0 4px 20px rgba(0, 0, 0, 0.15);
+            --transicion: all 0.3s ease;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+            color: var(--gris-oscuro);
+            overflow-x: hidden;
+            background-attachment: fixed;
+        }
+        
+        /* Estilos para la barra de navegación */
+        .header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 1000;
+            background: rgba(29, 53, 87, 0.95);
+            backdrop-filter: blur(10px);
+            box-shadow: var(--sombra);
+            transition: var(--transicion);
+        }
+        
+        .header.scrolled {
+            background: rgba(29, 53, 87, 0.98);
+            padding: 5px 0;
+        }
+        
+        .nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 15px 30px;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            text-decoration: none;
+        }
+        
+        .logo-text {
+            color: var(--blanco);
+            font-size: 1.8rem;
+            font-weight: 700;
+            letter-spacing: 1px;
+        }
+        
+        .logo-icon {
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(135deg, var(--dorado) 0%, #f4a261 100%);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--azul);
+            font-size: 1.8rem;
+            box-shadow: 0 0 15px rgba(233, 196, 106, 0.5);
+        }
+        
+        .nav-list {
+            display: flex;
+            list-style: none;
+            gap: 30px;
+        }
+        
+        .nav-link {
+            color: var(--blanco);
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 1.1rem;
+            padding: 8px 15px;
+            border-radius: 30px;
+            transition: var(--transicion);
+            position: relative;
+        }
+        
+        .nav-link:hover {
+            background: rgba(233, 196, 106, 0.2);
+        }
+        
+        .nav-link.active {
+            background: var(--dorado);
+            color: var(--azul);
+        }
+        
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 3px;
+            background: var(--dorado);
+            transition: var(--transicion);
+            border-radius: 3px;
+        }
+        
+        .nav-link:hover::after {
+            width: 100%;
+        }
+        
+        .hamburger {
+            display: none;
+            cursor: pointer;
+            color: var(--blanco);
+            font-size: 1.8rem;
+        }
+        
+        /* Sección Hero */
+        .hero {
+            height: 100vh;
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 0 20px;
+            background: linear-gradient(rgba(29, 53, 87, 0.85) 0%, rgba(42, 157, 143, 0.75) 100%), url('https://images.unsplash.com/photo-1519681393784-d120267933ba?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80') no-repeat center/cover;
+        }
+        
+        .hero-content {
+            max-width: 900px;
+            z-index: 2;
+            animation: fadeInUp 1s ease;
+        }
+        
+        .hero-title {
+            font-size: 4.5rem;
+            font-weight: 800;
+            color: var(--blanco);
+            margin-bottom: 20px;
+            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+            line-height: 1.1;
+        }
+        
+        .hero-subtitle {
+            font-size: 2rem;
+            color: var(--dorado);
+            margin-bottom: 30px;
+            font-weight: 600;
+            text-shadow: 0 1px 5px rgba(0, 0, 0, 0.2);
+        }
+        
+        .hero-text {
+            font-size: 1.2rem;
+            color: var(--blanco);
+            margin-bottom: 40px;
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
+            line-height: 1.6;
+        }
+        
+        .hero-btn {
+            display: inline-block;
+            padding: 15px 40px;
+            background: var(--dorado);
+            color: var(--azul);
+            font-size: 1.2rem;
+            font-weight: 600;
+            text-decoration: none;
+            border-radius: 50px;
+            transition: var(--transicion);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+        
+        .hero-btn:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+            background: #f4a261;
+        }
+        
+        /* Secciones */
+        .section {
+            padding: 100px 50px;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+        
+        .section-title {
+            text-align: center;
+            margin-bottom: 70px;
+            position: relative;
+        }
+        
+        .section-title h2 {
+            font-size: 2.8rem;
+            color: var(--azul);
+            display: inline-block;
+            background: linear-gradient(to right, var(--azul), var(--verde));
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            position: relative;
+            padding-bottom: 15px;
+        }
+        
+        .section-title h2::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100px;
+            height: 4px;
+            background: linear-gradient(to right, var(--rojo), var(--dorado));
+            border-radius: 2px;
+        }
+        
+        .section-subtitle {
+            text-align: center;
+            font-size: 1.4rem;
+            color: var(--verde);
+            max-width: 700px;
+            margin: 20px auto 0;
+            line-height: 1.6;
+        }
+        
+        /* Tarjetas */
+        .cards-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-top: 50px;
+        }
+        
+        .card {
+            background: var(--blanco);
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: var(--sombra);
+            transition: var(--transicion);
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
+        }
+        
+        .card-header {
+            background: linear-gradient(to right, var(--azul), var(--verde));
+            color: var(--blanco);
+            padding: 25px 20px;
+            text-align: center;
+        }
+        
+        .card-icon {
+            font-size: 3rem;
+            margin-bottom: 15px;
+            color: var(--dorado);
+        }
+        
+        .card-title {
+            font-size: 1.8rem;
+            margin-bottom: 10px;
+        }
+        
+        .card-body {
+            padding: 25px;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .card-text {
+            color: var(--gris-oscuro);
+            line-height: 1.6;
+            margin-bottom: 20px;
+            flex-grow: 1;
+        }
+        
+        .card-btn {
+            display: inline-block;
+            padding: 10px 25px;
+            background: var(--dorado);
+            color: var(--azul);
+            text-decoration: none;
+            border-radius: 30px;
+            font-weight: 600;
+            transition: var(--transicion);
+            align-self: flex-start;
+        }
+        
+        .card-btn:hover {
+            background: var(--rojo);
+            color: var(--blanco);
+        }
+        
+        /* Acerca de */
+        .about {
+            background: linear-gradient(to bottom, var(--blanco) 0%, #e9f5f4 100%);
+        }
+        
+        .about-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 50px;
+            align-items: center;
+        }
+        
+        .about-image {
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: var(--sombra);
+            height: 500px;
+            background: url('https://images.unsplash.com/photo-1501785888041-af3ef285b470?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80') center/cover;
+            position: relative;
+        }
+        
+        .about-image::before {
+            content: '';
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            right: 20px;
+            bottom: 20px;
+            border: 3px solid var(--dorado);
+            border-radius: 10px;
+            z-index: 2;
+        }
+        
+        .about-text {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            color: var(--gris-oscuro);
+        }
+        
+        .about-text p {
+            margin-bottom: 25px;
+        }
+        
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+            margin-top: 40px;
+        }
+        
+        .stat {
+            text-align: center;
+            padding: 20px;
+            background: rgba(233, 196, 106, 0.15);
+            border-radius: 10px;
+            transition: var(--transicion);
+        }
+        
+        .stat:hover {
+            transform: translateY(-5px);
+            background: rgba(42, 157, 143, 0.15);
+        }
+        
+        .stat-number {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--azul);
+            margin-bottom: 10px;
+        }
+        
+        .stat-text {
+            font-size: 1.1rem;
+            color: var(--verde);
+            font-weight: 600;
+        }
+        
+        /* Bandera */
+        .flag-section {
+            background: linear-gradient(45deg, var(--azul) 0%, var(--verde) 100%);
+            padding: 120px 50px;
+            text-align: center;
+            color: var(--blanco);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .flag-container {
+            max-width: 800px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 2;
+        }
+        
+        .flag-title {
+            font-size: 3rem;
+            margin-bottom: 30px;
+            color: var(--dorado);
+        }
+        
+        .flag-symbolism {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+            margin-top: 60px;
+        }
+        
+        .symbol-item {
+            background: rgba(241, 250, 238, 0.1);
+            backdrop-filter: blur(10px);
+            padding: 30px;
+            border-radius: 15px;
+            border: 1px solid rgba(233, 196, 106, 0.3);
+        }
+        
+        .symbol-title {
+            font-size: 1.5rem;
+            color: var(--dorado);
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+        
+        .symbol-text {
+            line-height: 1.6;
+        }
+        
+        /* Footer */
+        .footer {
+            background: var(--gris-oscuro);
+            color: var(--blanco);
+            padding: 70px 50px 30px;
+        }
+        
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 40px;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+        
+        .footer-column h3 {
+            font-size: 1.5rem;
+            margin-bottom: 25px;
+            color: var(--dorado);
+            position: relative;
+            padding-bottom: 10px;
+        }
+        
+        .footer-column h3::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 50px;
+            height: 3px;
+            background: var(--dorado);
+        }
+        
+        .footer-links {
+            list-style: none;
+        }
+        
+        .footer-links li {
+            margin-bottom: 15px;
+        }
+        
+        .footer-links a {
+            color: var(--blanco);
+            text-decoration: none;
+            transition: var(--transicion);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .footer-links a:hover {
+            color: var(--dorado);
+            padding-left: 5px;
+        }
+        
+        .footer-social {
+            display: flex;
+            gap: 15px;
+            margin-top: 20px;
+        }
+        
+        .social-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: rgba(241, 250, 238, 0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--blanco);
+            font-size: 1.2rem;
+            transition: var(--transicion);
+        }
+        
+        .social-icon:hover {
+            background: var(--dorado);
+            color: var(--azul);
+            transform: translateY(-5px);
+        }
+        
+        .footer-bottom {
+            max-width: 1400px;
+            margin: 50px auto 0;
+            padding-top: 30px;
+            border-top: 1px solid rgba(241, 250, 238, 0.1);
+            text-align: center;
+            font-size: 0.9rem;
+            color: var(--gris);
+        }
+        
+        /* Animaciones */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        /* Responsive */
+        @media (max-width: 992px) {
+            .hero-title {
+                font-size: 3.5rem;
+            }
+            
+            .hero-subtitle {
+                font-size: 1.8rem;
+            }
+            
+            .about-content {
+                grid-template-columns: 1fr;
+            }
+            
+            .about-image {
+                height: 400px;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .nav-list {
+                position: fixed;
+                top: 80px;
+                left: -100%;
+                width: 100%;
+                height: calc(100vh - 80px);
+                background: var(--azul);
+                flex-direction: column;
+                align-items: center;
+                padding-top: 50px;
+                transition: var(--transicion);
+                gap: 30px;
+            }
+            
+            .nav-list.active {
+                left: 0;
+            }
+            
+            .hamburger {
+                display: block;
+            }
+            
+            .hero-title {
+                font-size: 2.8rem;
+            }
+            
+            .hero-subtitle {
+                font-size: 1.5rem;
+            }
+            
+            .section {
+                padding: 80px 30px;
+            }
+            
+            .section-title h2 {
+                font-size: 2.3rem;
+            }
+        }
+        
+        @media (max-width: 576px) {
+            .hero-title {
+                font-size: 2.3rem;
+            }
+            
+            .hero-subtitle {
+                font-size: 1.3rem;
+            }
+            
+            .section {
+                padding: 60px 20px;
+            }
+            
+            .section-title h2 {
+                font-size: 2rem;
+            }
+            
+            .stats {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Barra de Navegación -->
+    <header class="header">
+        <nav class="nav">
+            <a href="#" class="logo">
+                <div class="logo-icon">
+                    <i class="fas fa-balance-scale"></i>
+                </div>
+                <div class="logo-text">NOVERIA</div>
+            </a>
+            
+            <ul class="nav-list">
+                <li><a href="#inicio" class="nav-link active">Inicio</a></li>
+                <li><a href="#sobre" class="nav-link">Sobre Noveria</a></li>
+                <li><a href="#sistema" class="nav-link">Sistema Jurídico</a></li>
+                <li><a href="#gobierno" class="nav-link">Gobierno</a></li>
+                <li><a href="#economia" class="nav-link">Economía</a></li>
+                <li><a href="#contacto" class="nav-link">Contacto</a></li>
+            </ul>
+            
+            <div class="hamburger">
+                <i class="fas fa-bars"></i>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Sección Hero -->
+    <section id="inicio" class="hero">
+        <div class="hero-content">
+            <h1 class="hero-title">REPÚBLICA DE NOVERIA</h1>
+            <h2 class="hero-subtitle">Progreso con Justicia</h2>
+            <p class="hero-text">Un país virtual con un sistema jurídico avanzado, gobierno semipresidencial y una economía sostenible. Descubre nuestra rica cultura, instituciones democráticas y compromiso con la justicia y el medio ambiente.</p>
+            <a href="#sobre" class="hero-btn">Explorar Noveria</a>
+        </div>
+    </section>
+
+    <!-- Sección Sobre Noveria -->
+    <section id="sobre" class="section about">
+        <div class="section-title">
+            <h2>Sobre la República de Noveria</h2>
+            <p class="section-subtitle">Conoce nuestro país, su historia, valores fundamentales y lo que nos hace únicos</p>
+        </div>
+        
+        <div class="about-content">
+            <div class="about-image"></div>
+            
+            <div class="about-text">
+                <p>La República de Noveria es un país virtual con una población de 8.5 millones de habitantes y una extensión territorial de 72,300 km². Nuestra capital, Novalis, es el centro político, económico y cultural de la nación.</p>
+                
+                <p>Noveria adopta un sistema de gobierno semipresidencial que combina elementos presidenciales y parlamentarios, garantizando estabilidad política y eficiencia administrativa. Nuestro lema nacional "Progreso con Justicia" refleja nuestro compromiso con el desarrollo equitativo y el Estado de Derecho.</p>
+                
+                <p>Somos un país bilingüe donde el novés y el español conviven armoniosamente, enriqueciendo nuestra identidad cultural. Nuestra moneda es el Novar (№), símbolo de una economía sólida y en crecimiento.</p>
+                
+                <div class="stats">
+                    <div class="stat">
+                        <div class="stat-number">8.5M</div>
+                        <div class="stat-text">Habitantes</div>
+                    </div>
+                    <div class="stat">
+                        <div class="stat-number">72,300</div>
+                        <div class="stat-text">km² Territorio</div>
+                    </div>
+                    <div class="stat">
+                        <div class="stat-number">6</div>
+                        <div class="stat-text">Provincias</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Sistema Jurídico -->
+    <section id="sistema" class="section">
+        <div class="section-title">
+            <h2>Sistema Jurídico</h2>
+            <p class="section-subtitle">Fundamentos legales que garantizan justicia, igualdad y convivencia pacífica</p>
+        </div>
+        
+        <div class="cards-container">
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-icon">
+                        <i class="fas fa-gavel"></i>
+                    </div>
+                    <h3 class="card-title">Concepto de Derecho</h3>
+                </div>
+                <div class="card-body">
+                    <p class="card-text">En Noveria, el Derecho es el conjunto de normas que regulan la conducta de los ciudadanos, estableciendo derechos, obligaciones y sanciones para garantizar el orden, la justicia y la convivencia pacífica.</p>
+                    <a href="#" class="card-btn">Leer más</a>
+                </div>
+            </div>
+            
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-icon">
+                        <i class="fas fa-book"></i>
+                    </div>
+                    <h3 class="card-title">Normas Fundamentales</h3>
+                </div>
+                <div class="card-body">
+                    <p class="card-text">Nuestro sistema jurídico se basa en principios fundamentales como igualdad ante la ley, protección del medio ambiente, transparencia y participación ciudadana, consagrados en nuestra Constitución Nacional.</p>
+                    <a href="#" class="card-btn">Leer más</a>
+                </div>
+            </div>
+            
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-icon">
+                        <i class="fas fa-balance-scale-left"></i>
+                    </div>
+                    <h3 class="card-title">Fuentes del Derecho</h3>
+                </div>
+                <div class="card-body">
+                    <p class="card-text">El ordenamiento jurídico noveriano se compone de diversas fuentes: Constitución Nacional, leyes, decretos, jurisprudencia, costumbre jurídica y doctrina, con una clara jerarquía normativa.</p>
+                    <a href="#" class="card-btn">Leer más</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Gobierno -->
+    <section id="gobierno" class="section" style="background: #f8f9fa;">
+        <div class="section-title">
+            <h2>Estructura del Gobierno</h2>
+            <p class="section-subtitle">Sistema semipresidencial que combina eficiencia administrativa y legitimidad popular</p>
+        </div>
+        
+        <div class="cards-container">
+            <div class="card">
+                <div class="card-header" style="background: linear-gradient(to right, var(--azul), #264653);">
+                    <div class="card-icon">
+                        <i class="fas fa-user-tie"></i>
+                    </div>
+                    <h3 class="card-title">Poder Ejecutivo</h3>
+                </div>
+                <div class="card-body">
+                    <p class="card-text">Compuesto por el Presidente (Jefe de Estado) y el Primer Ministro (Jefe de Gobierno). El Presidente es elegido por voto popular cada 5 años, mientras que el Primer Ministro es nombrado por el Presidente y ratificado por el Congreso.</p>
+                    <a href="#" class="card-btn">Conocer más</a>
+                </div>
+            </div>
+            
+            <div class="card">
+                <div class="card-header" style="background: linear-gradient(to right, var(--verde), #2a9d8f);">
+                    <div class="card-icon">
+                        <i class="fas fa-landmark"></i>
+                    </div>
+                    <h3 class="card-title">Poder Legislativo</h3>
+                </div>
+                <div class="card-body">
+                    <p class="card-text">El Congreso Nacional es bicameral: Cámara de Diputados (170 miembros) y Senado (30 miembros, 5 por provincia). Aprueba leyes, controla al ejecutivo y ratifica tratados internacionales.</p>
+                    <a href="#" class="card-btn">Conocer más</a>
+                </div>
+            </div>
+            
+            <div class="card">
+                <div class="card-header" style="background: linear-gradient(to right, var(--rojo), #e76f51);">
+                    <div class="card-icon">
+                        <i class="fas fa-scale-balanced"></i>
+                    </div>
+                    <h3 class="card-title">Poder Judicial</h3>
+                </div>
+                <div class="card-body">
+                    <p class="card-text">Encabezado por la Corte Suprema de Justicia (9 magistrados). Estructura jerárquica con tribunales superiores provinciales, juzgados de primera instancia y juzgados de paz municipales.</p>
+                    <a href="#" class="card-btn">Conocer más</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Bandera y Símbolos -->
+    <section class="flag-section">
+        <div class="flag-container">
+            <h2 class="flag-title">Bandera y Símbolos Nacionales</h2>
+            <p>Nuestra bandera representa los valores fundamentales de la nación noveriana y su rica identidad cultural.</p>
+            
+            <div class="flag-symbolism">
+                <div class="symbol-item">
+                    <h3 class="symbol-title"><i class="fas fa-square" style="color: #e63946;"></i> Franja Roja</h3>
+                    <p class="symbol-text">Representa el valor, la fuerza y el espíritu indomable del pueblo noveriano que ha luchado por su libertad y soberanía.</p>
+                </div>
+                
+                <div class="symbol-item">
+                    <h3 class="symbol-title"><i class="fas fa-square" style="color: #2a9d8f;"></i> Franja Verde</h3>
+                    <p class="symbol-text">Simboliza la riqueza natural, la fertilidad de nuestra tierra y el compromiso con el desarrollo sostenible y la protección ambiental.</p>
+                </div>
+                
+                <div class="symbol-item">
+                    <h3 class="symbol-title"><i class="fas fa-square" style="color: #1d3557;"></i> Franja Azul</h3>
+                    <p class="symbol-text">Evoca la paz, la estabilidad política y nuestra conexión con el mar y ríos que alimentan el comercio y la vida de la nación.</p>
+                </div>
+            </div>
+            
+            <div class="flag-symbolism" style="margin-top: 30px;">
+                <div class="symbol-item">
+                    <h3 class="symbol-title"><i class="fas fa-sun" style="color: #e9c46a;"></i> Sol Dorado</h3>
+                    <p class="symbol-text">Representa el renacer constante de la nación, la esperanza y la energía que impulsa nuestro futuro.</p>
+                </div>
+                
+                <div class="symbol-item">
+                    <h3 class="symbol-title"><i class="fas fa-scale-balanced" style="color: #e9c46a;"></i> Balanza</h3>
+                    <p class="symbol-text">Símbolo de equidad, imparcialidad y respeto por el Estado de Derecho que fundamenta nuestra sociedad.</p>
+                </div>
+                
+                <div class="symbol-item">
+                    <h3 class="symbol-title"><i class="fas fa-book-open" style="color: #e9c46a;"></i> Libro Abierto</h3>
+                    <p class="symbol-text">Representa el conocimiento, la educación y nuestra Constitución como base del orden social y jurídico.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Economía -->
+    <section id="economia" class="section">
+        <div class="section-title">
+            <h2>Modelo Económico</h2>
+            <p class="section-subtitle">Economía social de mercado con enfoque sostenible e innovador</p>
+        </div>
+        
+        <div class="cards-container">
+            <div class="card">
+                <div class="card-header" style="background: linear-gradient(to right, #2a9d8f, #287271);">
+                    <div class="card-icon">
+                        <i class="fas fa-seedling"></i>
+                    </div>
+                    <h3 class="card-title">Sector Primario (25% PIB)</h3>
+                </div>
+                <div class="card-body">
+                    <p class="card-text">Agricultura sostenible, minería responsable y gestión forestal con altos estándares ambientales. Cooperativas agrícolas y regalías del 8% para comunidades locales.</p>
+                    <a href="#" class="card-btn">Detalles</a>
+                </div>
+            </div>
+            
+            <div class="card">
+                <div class="card-header" style="background: linear-gradient(to right, #e9c46a, #f4a261);">
+                    <div class="card-icon">
+                        <i class="fas fa-industry"></i>
+                    </div>
+                    <h3 class="card-title">Sector Secundario (35% PIB)</h3>
+                </div>
+                <div class="card-body">
+                    <p class="card-text">Industria manufacturera limpia, energías renovables y clusters tecnológicos. Parques industriales en 4 provincias y meta del 60% de energía renovable para 2030.</p>
+                    <a href="#" class="card-btn">Detalles</a>
+                </div>
+            </div>
+            
+            <div class="card">
+                <div class="card-header" style="background: linear-gradient(to right, #1d3557, #14213d);">
+                    <div class="card-icon">
+                        <i class="fas fa-chart-line"></i>
+                    </div>
+                    <h3 class="card-title">Sector Terciario (40% PIB)</h3>
+                </div>
+                <div class="card-body">
+                    <p class="card-text">Servicios financieros, turismo sostenible, gobierno electrónico y centros de innovación. Centro financiero regional en Novalis y promoción de ecoturismo en 6 provincias.</p>
+                    <a href="#" class="card-btn">Detalles</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer id="contacto" class="footer">
+        <div class="footer-content">
+            <div class="footer-column">
+                <h3>República de Noveria</h3>
+                <p>Un país virtual comprometido con el progreso, la justicia y la sostenibilidad. Nuestras instituciones democráticas y sistema jurídico garantizan los derechos de todos los ciudadanos.</p>
+                <div class="footer-social">
+                    <a href="#" class="social-icon"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#" class="social-icon"><i class="fab fa-twitter"></i></a>
+                    <a href="#" class="social-icon"><i class="fab fa-instagram"></i></a>
+                    <a href="#" class="social-icon"><i class="fab fa-linkedin-in"></i></a>
+                </div>
+            </div>
+            
+            <div class="footer-column">
+                <h3>Enlaces Rápidos</h3>
+                <ul class="footer-links">
+                    <li><a href="#inicio"><i class="fas fa-chevron-right"></i> Inicio</a></li>
+                    <li><a href="#sobre"><i class="fas fa-chevron-right"></i> Sobre Noveria</a></li>
+                    <li><a href="#sistema"><i class="fas fa-chevron-right"></i> Sistema Jurídico</a></li>
+                    <li><a href="#gobierno"><i class="fas fa-chevron-right"></i> Gobierno</a></li>
+                    <li><a href="#economia"><i class="fas fa-chevron-right"></i> Economía</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-column">
+                <h3>Información de Contacto</h3>
+                <ul class="footer-links">
+                    <li><a href="#"><i class="fas fa-map-marker-alt"></i> Palacio de Gobierno, Novalis</a></li>
+                    <li><a href="#"><i class="fas fa-phone"></i> +500 1234-5678</a></li>
+                    <li><a href="#"><i class="fas fa-envelope"></i> info@noveria.gov.nv</a></li>
+                    <li><a href="#"><i class="fas fa-globe"></i> www.noveria.gov.nv</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-column">
+                <h3>Boletín Informativo</h3>
+                <p>Suscríbete para recibir las últimas noticias y actualizaciones sobre la República de Noveria.</p>
+                <form>
+                    <input type="email" placeholder="Tu correo electrónico" style="width: 100%; padding: 12px; margin-bottom: 15px; border-radius: 5px; border: none;">
+                    <button type="submit" style="background: var(--dorado); color: var(--azul); border: none; padding: 12px 25px; border-radius: 5px; font-weight: 600; cursor: pointer; transition: var(--transicion);">Suscribirse</button>
+                </form>
+            </div>
+        </div>
+        
+        <div class="footer-bottom">
+            <p>&copy; 2023 República de Noveria. Todos los derechos reservados. | Diseñado con <i class="fas fa-heart" style="color: var(--rojo);"></i> para la nación noveriana</p>
+        </div>
+    </footer>
+
+    <script>
+        // Navegación responsive
+        const hamburger = document.querySelector('.hamburger');
+        const navList = document.querySelector('.nav-list');
+        
+        hamburger.addEventListener('click', () => {
+            navList.classList.toggle('active');
+        });
+        
+        // Cerrar menú al hacer clic en un enlace
+        const navLinks = document.querySelectorAll('.nav-link');
+        navLinks.forEach(link => {
+            link.addEventListener('click', () => {
+                navList.classList.remove('active');
+            });
+        });
+        
+        // Cambiar clase activa al hacer scroll
+        const sections = document.querySelectorAll('section');
+        const navItems = document.querySelectorAll('.nav-link');
+        
+        window.addEventListener('scroll', () => {
+            let current = '';
+            
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop;
+                const sectionHeight = section.clientHeight;
+                
+                if (pageYOffset >= (sectionTop - sectionHeight / 3)) {
+                    current = section.getAttribute('id');
+                }
+            });
+            
+            navItems.forEach(item => {
+                item.classList.remove('active');
+                if (item.getAttribute('href').substring(1) === current) {
+                    item.classList.add('active');
+                }
+            });
+            
+            // Efecto en el header al hacer scroll
+            const header = document.querySelector('.header');
+            if (window.scrollY > 100) {
+                header.classList.add('scrolled');
+            } else {
+                header.classList.remove('scrolled');
+            }
+        });
+        
+        // Animaciones al hacer scroll
+        const observerOptions = {
+            root: null,
+            rootMargin: '0px',
+            threshold: 0.1
+        };
+        
+        const observer = new IntersectionObserver((entries, observer) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.animation = `fadeInUp 1s ease forwards`;
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, observerOptions);
+        
+        document.querySelectorAll('.card, .about-text, .stat, .symbol-item').forEach(el => {
+            el.style.opacity = '0';
+            el.style.transform = 'translateY(30px)';
+            observer.observe(el);
+        });
+    </script>
+</body>
+</html>
